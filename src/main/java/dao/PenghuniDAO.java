@@ -25,7 +25,6 @@ public class PenghuniDAO {
         this.conn = Koneksi.getConnection();
     }
 
-    // CREATE
     public void tambahPenghuni(Penghuni penghuni) {
 
         if (conn == null) {
@@ -62,7 +61,6 @@ public class PenghuniDAO {
         }
     }
 
-    // READ: seluruh penghuni
     public List<Penghuni> ambilSemuaPenghuni() {
 
         List<Penghuni> daftarPenghuni = new ArrayList<>();
@@ -104,7 +102,6 @@ public class PenghuniDAO {
         return daftarPenghuni;
     }
 
-    // READ: satu penghuni berdasarkan NIM
     public Penghuni cariPenghuniBerdasarkanNIM(String nim) {
 
         if (conn == null) {
@@ -145,7 +142,6 @@ public class PenghuniDAO {
         return null;
     }
 
-    // UPDATE
     public void updatePenghuni(String nim, Penghuni penghuni) {
 
         if (conn == null) {
@@ -184,7 +180,6 @@ public class PenghuniDAO {
         }
     }
 
-    // DELETE
     public void hapusPenghuni(String nim) {
 
         if (conn == null) {
