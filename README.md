@@ -128,6 +128,7 @@ Encapsulation digunakan untuk menjaga agar data pada objek tidak dapat diakses d
 Pada gambar di atas, terdapat dua atribut yang dideklarasikan menggunakan access modifier `private`, yaitu:
 - `private String tanggalMasukSurat;`
 - `private String pengirim;`
+
 `private` membatasi akses langsung terhadap kedua atribut tersebut dari luar class `SuratMasuk`. Oleh karena itu, akses dan perubahan nilai atribut dilakukan melalui method yang disediakan oleh class.
 
 Data surat dan penghuni dikelola melalui metode getter dan setter yang merupakan metode untuk mengakses data yang di encap. Getter digunakan untuk mengambil, sedangkan setter digunakan untuk mengubah dengan tetap memperhatikan aturan yang telah ditentukan.
@@ -188,8 +189,6 @@ Pada gambar di atas, deklarasi `public class SuratKeluar extends Surat` menunjuk
 Konstruktor `SuratKeluar` menerima parameter `perihal`, `kategoriSurat`, `tanggalKeluarSurat`, dan `penerima`. Perintah `super(urutanSuratBerikutnya, "", perihal);` memanggil konstruktor class induk dengan meneruskan urutan surat, string kosong sebagai nomor surat awal, dan perihal. Nomor surat kemudian dibentuk oleh proses berikutnya dalam konstruktor.
 
 Atribut `kategoriSurat`, `tanggalKeluarSurat`, dan `penerima` digunakan untuk menyimpan informasi khusus surat keluar.
-
-Karena SuratMasuk dan SuratKeluar merupakan turunan dari class Surat, maka saat deklarasinya menggunakan extends.
 
 Penerapan inheritance digunakan agar karakteristik yang sama dapat dikelola pada satu struktur dasar dan tidak perlu dibuat berulang pada setiap jenis surat.
 
