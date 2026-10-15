@@ -123,9 +123,29 @@ Data yang berhasil diambil dari database dikirimkan kembali melalui DAO kepada C
 
 Encapsulation digunakan untuk menjaga agar data pada objek tidak dapat diakses dan diubah secara bebas dari luar class.
 
+![Atribut Private pada Class SuratMasuk](assets/encapsulation-atribut.png)
+
+Pada gambar di atas, terdapat dua atribut yang dideklarasikan menggunakan access modifier `private`, yaitu:
+- `private String tanggalMasukSurat;`
+- `private String pengirim;`
+`private` membatasi akses langsung terhadap kedua atribut tersebut dari luar class `SuratMasuk`. Oleh karena itu, akses dan perubahan nilai atribut dilakukan melalui method yang disediakan oleh class.
+
 Data surat dan penghuni dikelola melalui metode getter dan setter yang merupakan metode untuk mengakses data yang di encap. Getter digunakan untuk mengambil, sedangkan setter digunakan untuk mengubah dengan tetap memperhatikan aturan yang telah ditentukan.
 
 Penerapan ini dapat ditemukan pada class Surat, SuratMasuk, SuratKeluar, dan Penghuni.
+
+![Getter dan Setter pada Class SuratMasuk](assets/encapsulation-getter-setter.png)
+
+Pada gambar di atas, terdapat method getter dan setter yang digunakan untuk mengakses atribut:
+
+- `getTanggalMasukSurat()` mengembalikan nilai atribut `tanggalMasukSurat` melalui perintah `return tanggalMasukSurat;`.
+- `getPengirim()` mengembalikan nilai atribut `pengirim` melalui perintah `return pengirim;`.
+- `setTanggalMasukSurat(String tanggalMasukSurat)` digunakan untuk mengubah nilai tanggal masuk surat.
+- `setPengirim(String pengirim)` digunakan untuk mengubah nilai pengirim surat.
+
+Pada kedua setter, kondisi `nilai != null` memeriksa agar nilai tidak `null`, sedangkan `!nilai.trim().isEmpty()` memeriksa agar nilai tidak kosong setelah spasi di awal dan akhir dihilangkan.
+
+Jika nilai memenuhi kondisi, perintah seperti `this.pengirim = pengirim.trim();` menyimpan nilai tersebut ke dalam atribut objek. Jika tidak memenuhi kondisi, program menampilkan pesan bahwa data tidak boleh kosong.
 
 Setter juga dapat digunakan untuk melakukan validasi terhadap data yang diberikan. Sebagai contoh, kategori surat keluar dibatasi pada rentang kategori yang ditentukan, sedangkan tanggal dan informasi pengirim atau penerima diperiksa agar tidak kosong.
 
@@ -135,26 +155,41 @@ Dengan penerapan encapsulation, pengelolaan data objek menjadi lebih terkontrol 
 
 ## 6. Penerapan Inheritance
 
-Surat masuk dan surat keluar memiliki beberapa karakteristik umum, seperti nomor surat dan perihal, tetapi juga memiliki karakteristik khusus masing-masing.
-
-Karena keduanya merupakan jenis surat, digunakan inheritance dengan class Surat yang merupakan informasi umum yang dipakai oleh kedua jenis surat, yaitu:
-
+Surat masuk dan surat keluar memiliki beberapa karakteristik umum, seperti nomor surat dan perihal, tetapi juga memiliki karakteristik khusus masing-masing. Karena keduanya merupakan jenis surat, digunakan inheritance dengan class Surat yang merupakan informasi umum yang dipakai oleh kedua jenis surat, yaitu:
 - Urutan surat
 - Nomor surat
 - Perihal
 
-SuratMasuk:
+Untuk Penerapannya adlaah sebagai berikut:
+
+**SuratMasuk memiliki:**
 
 - Tanggal surat masuk
 - Pengirim
+  
+![Inheritance pada Class SuratMasuk](assets/inheritance-surat-masuk.png)
 
-SuratKeluar:
+Pada gambar di atas, deklarasi `public class SuratMasuk extends Surat` menunjukkan bahwa `SuratMasuk` merupakan turunan dari class `Surat`.
+
+Konstruktor `SuratMasuk` menerima parameter `urutanSurat`, `nomorSurat`, `perihal`, `tanggalMasukSurat`, dan `pengirim`. Perintah `super(urutanSurat, nomorSurat, perihal);` memanggil konstruktor class induk untuk menginisialisasi data umum surat, yaitu urutan surat, nomor surat, dan perihal.
+
+Sementara itu, `tanggalMasukSurat` dan `pengirim` merupakan atribut khusus yang dikelola oleh class `SuratMasuk`.
+
+**SuratKeluar memiliki:**
 
 - Kategori surat
 - Tanggal keluar surat
 - Penerima
 
-SuratMasuk dan SuratKeluar merupakan turunan dari class Surat menggunakan extends.
+![Inheritance pada Class SuratKeluar](assets/inheritance-surat-keluar.png)
+
+Pada gambar di atas, deklarasi `public class SuratKeluar extends Surat` menunjukkan bahwa `SuratKeluar` juga merupakan turunan dari class `Surat`.
+
+Konstruktor `SuratKeluar` menerima parameter `perihal`, `kategoriSurat`, `tanggalKeluarSurat`, dan `penerima`. Perintah `super(urutanSuratBerikutnya, "", perihal);` memanggil konstruktor class induk dengan meneruskan urutan surat, string kosong sebagai nomor surat awal, dan perihal. Nomor surat kemudian dibentuk oleh proses berikutnya dalam konstruktor.
+
+Atribut `kategoriSurat`, `tanggalKeluarSurat`, dan `penerima` digunakan untuk menyimpan informasi khusus surat keluar.
+
+Karena SuratMasuk dan SuratKeluar merupakan turunan dari class Surat, maka saat deklarasinya menggunakan extends.
 
 Penerapan inheritance digunakan agar karakteristik yang sama dapat dikelola pada satu struktur dasar dan tidak perlu dibuat berulang pada setiap jenis surat.
 
@@ -167,6 +202,22 @@ Oleh karena itu, Surat digunakan sebagai abstract class yang menjadi dasar bagi 
 Abstraction digunakan untuk menentukan karakteristik dan perilaku umum yang harus dimiliki oleh setiap jenis surat, sementara detail yang berbeda dapat ditentukan oleh masing-masing jenis surat.
 
 Salah satu perilaku yang harus dimiliki setiap jenis surat adalah kemampuan untuk menampilkan informasi surat melalui method tampilkanDaftarSurat().
+
+![Abstract Class Surat](assets/abstraction-abstract-class.png)
+
+Pada gambar di atas, deklarasi `public abstract class Surat implements ArsipSurat` menunjukkan bahwa `Surat` merupakan class abstrak yang mengimplementasikan interface `ArsipSurat`.
+
+`abstract` menandakan bahwa class `Surat` tidak dapat dibuat menjadi objek secara langsung. Class ini digunakan sebagai dasar bagi class turunan seperti `SuratMasuk` dan `SuratKeluar`.
+
+Selain itu, atribut `protected int urutanSurat`, `protected String nomorSurat`, dan `protected String perihal` mendefinisikan data umum yang dimiliki oleh surat dan nantinya akan diikuti oleh surat masuk dan keluar. Lalu digunakan Access modifier `protected` agar atribut tersebut diakses oleh class turunan sesuai aturan akses Java.
+
+![Abstract Method tampilkanDaftarSurat](assets/abstraction-abstract-method.png)
+
+Pada gambar di atas, method `public abstract void tampilkanDaftarSurat();` dideklarasikan tanpa isi method.
+
+`abstract` menunjukkan bahwa method tersebut hanya menetapkan perilaku yang harus tersedia pada class turunan, tanpa menentukan detail pelaksanaannya pada class `Surat`.
+
+Class `SuratMasuk` dan `SuratKeluar` kemudian menyediakan implementasi masing-masing untuk menampilkan informasi surat sesuai jenisnya.
 
 Method tersebut diterapkan oleh setiap jenis surat agar informasi yang ditampilkan sesuai dengan karakteristik surat masuk maupun surat keluar.
 
@@ -186,6 +237,20 @@ Method tampilkanDaftarSurat() diterapkan kembali pada:
 
 - SuratMasuk
 - SuratKeluar
+
+![Polymorphism pada Class SuratMasuk](assets/polymorphism-surat-masuk.png)
+
+Pada gambar di atas, method `tampilkanDaftarSurat()` menggunakan anotasi `@Override` untuk menunjukkan bahwa method tersebut mengimplementasikan kembali method dari class induk.
+
+Implementasi ini menampilkan judul `DAFTAR SURAT MASUK`, memanggil `tampilkanInfoDasar()` untuk menampilkan informasi umum surat, kemudian menampilkan `tanggalMasukSurat` dan `pengirim`.
+
+![Polymorphism pada Class SuratKeluar](assets/polymorphism-surat-keluar.png)
+
+Pada gambar di atas, method `tampilkanDaftarSurat()` juga menggunakan anotasi `@Override`.
+
+Implementasinya menampilkan judul `DAFTAR SURAT KELUAR`, memanggil `tampilkanInfoDasar()`, kemudian menampilkan kategori surat melalui `getKategoriSurat()`, tanggal keluar, dan penerima.
+
+Kedua class memiliki method dengan nama yang sama, tetapi isi pelaksanaannya berbeda. Perbedaan tersebut memungkinkan setiap jenis surat menampilkan informasi sesuai karakteristiknya.
 
 Overriding digunakan agar setiap jenis surat dapat menampilkan informasi sesuai dengan karakteristiknya masing-masing.
 
@@ -229,11 +294,41 @@ JDBC diterapkan melalui beberapa komponen, yaitu:
 - ResultSet digunakan untuk membaca hasil query SELECT.
 - executeUpdate() digunakan untuk menjalankan perintah INSERT, UPDATE, dan DELETE.
 
+berikut ini adalah kode koneksinya:
+![Koneksi Database menggunakan JDBC](assets/jdbc-koneks.png)
+
+Pada gambar di atas, class `Koneksi` mendefinisikan konfigurasi dan method untuk membuat koneksi database.
+
+- `URL` menyimpan alamat koneksi JDBC, yaitu `jdbc:mysql://localhost:3306/arsip_surat_asmaul`. Alamat ini menunjukkan penggunaan driver MySQL, server lokal, port `3306`, dan database `arsip_surat_asmaul`.
+- `USER` menyimpan username database, yaitu `root`, sedangkan `PASS` menyimpan password yang digunakan. Pada konfigurasi ini, password berupa string kosong.
+- `private static Connection conn;` mendeklarasikan variabel untuk menyimpan objek koneksi database.
+- `getConnection()` merupakan method yang menyediakan koneksi kepada class lain yang membutuhkannya.
+- `if (conn == null)` memeriksa apakah objek koneksi belum tersedia. Jika belum, program memanggil `DriverManager.getConnection(URL, USER, PASS)` untuk membuat koneksi.
+- `try-catch` menangani kesalahan bertipe `SQLException` yang mungkin terjadi selama proses koneksi. Jika terjadi kesalahan, pesan error ditampilkan melalui `e.getMessage()`.
+- `return conn;` mengembalikan objek koneksi agar dapat digunakan oleh class DAO.
+
 PreparedStatement digunakan agar parameter input pengguna dikirim secara terpisah dari struktur perintah SQL. Pendekatan ini membantu mengurangi risiko SQL injection dibandingkan dengan menyusun query melalui penggabungan string input secara langsung.
 
 Pengambilan data dilakukan melalui query SELECT, sedangkan penambahan, perubahan, dan penghapusan data dilakukan melalui perintah SQL yang sesuai.
 
 DAO (Data Access Object) digunakan untuk memisahkan proses akses database dari pengendalian alur program. Dengan pola ini, Controller tidak perlu menuliskan perintah SQL secara langsung untuk setiap proses pengelolaan data.
+
+Berikut ini adalah contoh penerapan sql pada DAO:
+![Query JDBC pada SuratMasukDAO](assets/jdbc-preparedstatement.png)
+
+Pada gambar di atas, terdapat dua perintah SQL yang digunakan dalam proses penambahan surat masuk.
+
+Pertama, variabel `sqlUrutan` menyimpan query:
+
+`SELECT COALESCE(MAX(urutan_surat), 0) + 1 AS urutan_baru FROM surat_masuk`
+
+Query ini mengambil nilai urutan surat terbesar dari tabel `surat_masuk`, kemudian menambahkan `1` untuk memperoleh urutan berikutnya. Fungsi `COALESCE()` menghasilkan nilai `0` jika nilai maksimum tidak tersedia, sehingga urutan berikutnya dapat dimulai dari `1`.
+
+Kedua, variabel `sql` menyimpan query `INSERT INTO surat_masuk` untuk menambahkan data ke kolom `urutan_surat`, `nomor_surat`, `perihal`, `tanggal_masuk`, dan `pengirim`.
+
+Tanda tanya (`?`) pada bagian `VALUES` merupakan placeholder untuk parameter yang akan diisi menggunakan `PreparedStatement`. Sementara itu, `STR_TO_DATE(?, '%d-%m-%Y')` digunakan untuk mengonversi tanggal berbentuk teks dengan format hari-bulan-tahun menjadi nilai tanggal yang dapat disimpan ke database.
+
+Pada implementasi DAO, query tersebut disiapkan dan dijalankan melalui JDBC. Parameter diisikan menggunakan method seperti `setInt()` dan `setString()`, sedangkan `executeUpdate()` digunakan untuk menjalankan operasi penambahan data.
 
 Database MySQL yang digunakan dalam sistem bernama arsip_surat_asmaul. Struktur tabel dan data awal disediakan melalui file SQL yang disertakan dalam repository.
 
